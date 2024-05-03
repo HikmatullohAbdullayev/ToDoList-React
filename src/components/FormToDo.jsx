@@ -7,29 +7,29 @@ function FormToDo({ addTask }) {
   const submit = (e) => {
     e.preventDefault();
     addTask(input);
-    console.log(input);
     setInput("");
   };
   const change = (e) => {
     setInput(e.currentTarget.value);
 
-    // console.log(input);
   };
 
   return (
     <div>
-      <form onSubmit={submit}>
-        <div className="max-w-[500px]  bg-slate-200">
-          <input className="w-full mx-auto bg-slate-200  px-[10px] py-[8px] rounded-lg"
+      <form className="flex  justify-between items-center max-w-[500px] gap-3" onSubmit={submit}>
+        <div className=" w-full  bg-slate-200 rounded-lg ">
+          <input className="w-full mx-auto bg-slate-200  px-[10px] py-[8px] rounded-lg active:border-blue-300 focus:outline-blue-300"
             type="text"
             value={input}
             onChange={change}
             placeholder="Ma'lumot kiriting"
+            aria-label="add todo"
           />
+          
         </div>
 
-        <button>
-          <span>
+        <button className="py-[8px] px-[12px] bg-blue-500 rounded-md hover:bg-blue-600 active:bg-blue-700">
+          <span className="fill-white">
             <AddIcon />
           </span>
         </button>
