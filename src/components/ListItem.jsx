@@ -2,7 +2,7 @@ import DeleteIcon from "../assets/icon/DeleteIcon"
 import DoneIcon from "../assets/icon/DoneIcon"
 
 function ListItem({item, delTask, doneTask }) {
-    console.log(item);
+    
     return (
 
         <ul key={item.id} className="flex gap-2 justify-between items-center  py-[10px]  ">

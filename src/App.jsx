@@ -60,11 +60,11 @@ function App() {
     <section className="flex flex-col justify-center items-center px-[20px]   py-[16px] bg-blue-300 h-screen">
       <Toaster />
       <div className="container  max-w-[500px] w-full max-h-[500px]  h-full flex flex-col justify-start items-center bg-slate-100 rounded-lg  ">
-        <h1 className="text-[24px] text-center py-[20px] text-blue-800">Vazifalar ro`yhati {todos.length}</h1>
+        <h1 className="text-[24px] text-center py-[20px] text-blue-800">Vazifalar ro`yhati {todos.length} ta</h1>
         <div className="w-full px-[10px]">
           <FormToDo addTask={addTask} />
           <div className="flex justify-between items-center py-[20px] gap-[5px]">
-            <button className="bg-blue-400 rounded-md px-[3px] py-[1px]" onClick={toggleAll}>Barchasi {todos.length}</button>
+            <button className="bg-blue-400 rounded-md px-[3px] py-[1px]" onClick={toggleAll}>Barchasi </button>
             <button className="bg-yellow-400 rounded-md px-[3px] py-[1px]" onClick={toggleDone}>Bajarilgan</button>
             <button className="bg-green-400 rounded-md px-[3px] py-[1px]" onClick={toggleTask}>Bajarilmagan</button>
           </div>
