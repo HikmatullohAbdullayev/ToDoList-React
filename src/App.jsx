@@ -1,22 +1,116 @@
+
+import { useState, useEffect } from "react";
+import FormToDo from "./components/FormToDo";
+import ListItem from "./components/ListItem";
+import ListItemDone from "./components/ListItemDone";
+import toast, { Toaster } from "react-hot-toast";
+
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [done, setDone] = useState("all");
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem("userData")) || [];
+    setTodos(storedTodos);
+  }, []);
+
+  const addTask = (input) => {
+    if (input) {
+      const newData = {
+        id: Date.now(),
+        title: input,
+        status: false,
+      };
+      const addTodo = [...todos, newData];
+      setTodos(addTodo);
+      localStorage.setItem("userData", JSON.stringify(addTodo));
+      toast.success("Muvaffaqiyatli qo'shildi!");
+    } else {
+      toast.error("Ma'lumot kiritilmagan!");
+    }
+  };
+
+  const delTask = (id) => {
+    const delTodo = todos.filter((item) => item.id !== id);
+    setTodos(delTodo);
+    localStorage.setItem("userData", JSON.stringify(delTodo));
+  };
+
+  const doneTask = (id) => {
+    const doneTodo = todos.map((item) =>
+    item.id === id ? { ...item, status: !item.status } : item
+    );
+    setTodos(doneTodo);
+    localStorage.setItem("userData", JSON.stringify(doneTodo));
+  };
+
+  const toggleAll = () => {
+    setDone("all");
+  };
+
+  const toggleDone = () => {
+    setDone("done");
+  };
+
+  const toggleTask = () => {
+    setDone("task");
+  };
+
   return (
-    <section className="flex flex-col justify-center items-center bg-slate-700 h-screen ">
-      <div className="todo">
-        <form className="flex">
-          <div className="ino">
-            <input type="text" />
+    <section className="flex flex-col justify-center items-center bg-blue-300 h-screen">
+      <Toaster />
+      <div className="container max-w-[500px] w-full flex flex-col justify-center items-center bg-slate-100 rounded-lg p-[10px]">
+        <h1 className="text-[24px] text-center py-[20px] text-blue-800">Vazifalar ro'yhati {todos.length}</h1>
+        <div className="w-full">
+          <FormToDo addTask={addTask} />
+          <div className="flex justify-between items-center">
+            <button onClick={toggleAll}>Barchasi {todos.length}</button>
+            <button onClick={toggleDone}>Bajarilgan</button>
+            <button onClick={toggleTask}>Bajarilmagan</button>
           </div>
-          <div className="btn">
-            <button>Qo`shish</button>
+          <div className="flex gap-3 bg-slate-100">
+            {done === "all" && (
+              <div className="item1">
+                {todos.map((task) => (
+                  <ListItem
+                    key={task.id}
+                    item={task}
+                    delTask={delTask}
+                    doneTask={doneTask}
+                  />
+                ))}
+              </div>
+            )}
+            {done === "done" && (
+              <div className="item2">
+                {todos
+                  .filter((task) => task.status)
+                  .map((task) => (
+                    <ListItemDone
+                      key={task.id}
+                      item={task}
+                      delTask={delTask}
+                      doneTask={doneTask}
+                    />
+                  ))}
+              </div>
+            )}
+            {done === "task" && (
+              <div className="item2">
+                {todos
+                  .filter((task) => !task.status)
+                  .map((task) => (
+                    <ListItemDone
+                      key={task.id}
+                      item={task}
+                      delTask={delTask}
+                      doneTask={doneTask}
+                    />
+                  ))}
+              </div>
+            )}
           </div>
-        </form>
-      </div> 
-      <div className="list flex">
-        <input type="checkbox" name="done" id="done" />
-        <label htmlFor="done">
-        <p>item</p>
-          </label>
-        <button>O`chirish</button>
+        </div>
       </div>
     </section>
   );
